@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Player</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      #player {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      audio {
+        width: 300px;
+        margin-bottom: 10px;
+      }
+
+      button {
+        margin: 5px;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="player">
+      <audio id="audio" controls></audio>
+      <div>
+        <button onclick="playPause()">Play/Pause</button>
+        <button onclick="stop()">Stop</button>
+      </div>
+    </div>
+
+    <script>
+      const audio = document.getElementById("audio");
+      const songs = [
+        "https://example.com/song1.mp3",
+        "https://example.com/song2.mp3",
+        "https://example.com/song3.mp3",
+      ];
+      let currentSongIndex = 0;
+
+      function playPause() {
+        if (audio.paused) {
+          audio.src = songs[currentSongIndex];
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      }
+
+      function stop() {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+
+      audio.addEventListener("ended", function () {
+        currentSongIndex = (currentSongIndex + 1) % songs.length;
+        audio.src = songs[currentSongIndex];
+        audio.play();
+      });
+    </script>
+  </body>
+</html>
